@@ -1,0 +1,21 @@
+<h2>Post List</h2>
+
+
+<a class="btn btn-primary" href="/post/create">Create Post</a>
+
+
+{{#each data.postList}}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div>
+                <strong>name: </strong> <a href="/post/{{ id }}">{{ name }}</a>
+            </div>
+            <div>
+                <strong>author: </strong> <a href="user/{{ id }}">{{ author }}
+            </div>
+            <div>
+                <strong>description: </strong>{{description}}
+            </div>
+        </div>
+    </div>
+{{/each}}
