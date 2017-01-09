@@ -2,7 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-var User = require('../model/user.js');
+var User = require('../../model/user.js');
 
 // var auth = function(request, response, next) {
 //     if (request.session && request.session.user === 'testadmin' && request.session.admin) {
