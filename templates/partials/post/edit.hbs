@@ -1,0 +1,20 @@
+<h2>{{ data.title }}</h2>
+
+{{#if message.success}}
+    <div class="success notice">
+        <p>{{ message.success }}</p>
+    </div>
+{{/if}}
+
+
+
+<form method="POST" enctype="application/x-www-form-urlencoded" action="/post/{{ data.post.id }}">
+    <input name="_method" type="hidden" value="{{ data.method }}">
+
+    <input name="name" type="text" value="{{ data.post.name }}" placeholder="Name">
+    <input name="type" type="text" value="{{ data.post.type}}" placeholder="Type">
+    <input name="author" type="text" value="{{ data.post.author }}" placeholder="Author">
+    <textarea name="description" placeholder="Description">{{ data.post.description }}</textarea>
+
+    <button type="submit">Save Post</button>
+</form>

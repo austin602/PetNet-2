@@ -1,5 +1,3 @@
-// load express module
-var express = require('express');
 
 // create express server
 var server = express ();
@@ -147,9 +145,9 @@ var basicRoutes = require('./routes/basic.js');
 
 server.use('/', basicRoutes);
 
-// var postRoutes = require ('./routes/post/post.js');
-//
-// server.use ('/post', postRoutes);
+var postRoutes = require ('./routes/post/post.js');
+
+server.use ('/post', postRoutes);
 
 // Connect the user routes
 var userRoutes = require ('./routes/user/user.js');
