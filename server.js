@@ -8,7 +8,7 @@ server.use(express.static('public'));
 // Port for server to run
 var port = 3000;
 
-// Load body parser module
+// Load body parser module.
 var bodyParser = require ('body-parser');
 
 // Set express to use body parser to pull from POST requests
