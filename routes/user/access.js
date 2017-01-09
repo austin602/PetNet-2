@@ -48,7 +48,7 @@ router.post('/login', function(request, response) {
                 }
                 console.log('This is the session data: ', request.session);
 
-                response.redirect('/');
+                response.redirect('/user/profile');
             }
         }
     );
@@ -266,6 +266,16 @@ router.post ('/register', function (request, response) {
     });
 
 
+});
+
+router.get ('/profile', function(request, response) {
+    console.log('session: ', request.session);
+
+    response.render('profile', {
+        data: {
+            user: request.session.user
+        }
+    });
 });
 
 router.get('/logout', function(request, response) {
