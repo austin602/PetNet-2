@@ -107,7 +107,7 @@ var mongoClient = require('mongodb').MongoClient;
 global.db;
 
 // Connection to the database
-mongoClient.connect ('mongodb://localhost:27017/PetNet', function(error, database) {
+mongoClient.connect ('mongodb://ahaddock:password2017@ds145868.mlab.com:45868/petnet', function(error, database) {
     if(error) {
         console.error('*** ERROR: Unable to connect to the mongo database.');
         console.error(error);
@@ -131,7 +131,7 @@ mongoClient.connect ('mongodb://localhost:27017/PetNet', function(error, databas
 var mongoose = require('mongoose');
 
 // Connect mongoose to mongodb server
-mongoose.connect('mongodb://localhost:27017/PetNet');
+mongoose.connect('mongodb://ahaddock:password2017@ds145868.mlab.com:45868/petnet');
 
 // Set mongoose promise library to use
 mongoose.promise = require('bluebird');
