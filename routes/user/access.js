@@ -15,7 +15,7 @@ var User = require('../../model/user.js');
 
 router.get('/login', function(request, response) {
     if (request.session.user) {
-        response.redirect('/');
+        response.redirect('/profile/');
     }
     else {
         response.render('login');
@@ -48,7 +48,7 @@ router.post('/login', function(request, response) {
                 }
                 console.log('This is the session data: ', request.session);
 
-                response.redirect('/user/profile');
+                response.redirect('/profile/');
             }
         }
     );
@@ -154,6 +154,11 @@ router.get('/register', function(request, response) {
 //         }
 //     )
 // });
+
+// Check for existing user
+// Create basic email title and body
+// Add new user to database
+// Send confirmation email to provided email
 
 router.post ('/register', function (request, response) {
     // response.send ('New user');

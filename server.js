@@ -157,3 +157,8 @@ server.use ('/admin', userRoutes);
 var accessRoutes = require ('./routes/user/access.js');
 
 server.use ('/user', accessRoutes);
+
+// Connect profile routes
+var profileRoutes = require('./routes/user/profile.js');
+
+server.use('/profile', profileRoutes);
