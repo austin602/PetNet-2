@@ -149,6 +149,10 @@ var postRoutes = require ('./routes/post/post.js');
 
 server.use ('/post', postRoutes);
 
+var eventRoutes = require ('./routes/event.js');
+
+server.use ('/event', eventRoutes);
+
 // Connect the user routes
 var userRoutes = require ('./routes/user/admin.js');
 
