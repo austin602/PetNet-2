@@ -3,13 +3,15 @@
 <h3>Email: {{data.user.email}}</h3>
 </div>
 <br>
+{{#each data.info}}
 <div class="pet-display">
-<h3>Pet Name: {{data.info.name}}</h3>
-<h3>Pet Type: {{data.info.type}}</h3>
-<h3>Pet Breed: {{data.info.breed}}</h3>
-<h3>Pet Biography: {{data.info.bio}}</h3>
+<h3>Pet Name: {{name}}</h3>
+<h3>Pet Type: {{type}}</h3>
+<h3>Pet Breed: {{breed}}</h3>
+<h3>Pet Biography: {{bio}}</h3>
 </div>
 <br>
+{{/each}}
 
 
 

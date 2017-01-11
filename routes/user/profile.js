@@ -21,11 +21,11 @@ router.get ('/', function(request, response) {
                 response.json(result);
             }
             else {
-                console.log('*****RESULT: ', result);
+                console.log('*****RESULT: ', result.pets);
                 response.render('profile', {
                     data: {
                         user: result,
-                        info: result.pets[0]
+                        info: result.pets
                     }
                 });
             }
@@ -59,9 +59,10 @@ router.get('/addpet', function(request, response) {
 router.post('/addpet', function(request, response) {
     // console.log('***Input Received: ', request.body);
 
+    var updateUser = request.session.user;
     var newPet = Pets(request.body);
 
-    newPet.save (function(error, result) {
+    newPet.save (function(error, savedPet) {
         if (error) {
             var errorMessage = 'Unable to save pet to the database';
             console.error('***ERROR: ', errorMessage);
@@ -69,31 +70,55 @@ router.post('/addpet', function(request, response) {
             response.send(errorMessage);
         }
             else {
-                    var updateUser = request.session.user;
-                    User.pets = result;
+                    // var newPet = request.body;
+                    // var updateUser = request.session.user;
+                    // var petList = [];
+                    // var pet;
+                    // for (i = 0; i < 1; i++) {
+                    //     pet = {
+                    //         name: newPet.name,
+                    //         type: newPet.type,
+                    //         breed: newPet.breed,
+                    //         bio: newPet.bio
+                    //     }
+                    //     petList.push(pet);
+                    // }
 
-                    console.log('****** USER PET DATA: ', User.pets);
-                    console.log('****** updateUser: ', updateUser);
 
-                    User.findOneAndUpdate(updateUser,{pets:User.pets}, function(error, result) {
-                        if (error) {
-                            console.error('***ERROR: Unable to save pet schema to user schema');
-                            response.send(error);
-                        }
-                        else {
-                            if (request.sendJson) {
-                                response.json({
-                                    message: "User updated with pet data"
-                                });
-                            }
-                            else {
-                                console.log('Pet was successfully linked to user.', result);
-                                response.redirect('/profile/');
-                            }
+                    // Pets.insertMany(newPet, function(error, savedPet) {
+                    //     if (error) {
+                    //         console.log('There was an error adding the pet list to the database.', error);
+                    //         response.send('There was an error adding the pet list.');
+                    //     }
+                    //     else {
+                    //         console.log('****** updateUser: ', updateUser);
+                    //
+                    //
+                    //         console.log('****** USER PET DATA: ', savedPet);
+
+                            User.findOneAndUpdate(updateUser,{$push: {pets:savedPet}}, function(error, result) {
+                                if (error) {
+                                    console.error('***ERROR: Unable to save pet schema to user schema');
+                                    response.send(error);
+                                }
+                                else {
+                                    if (request.sendJson) {
+                                        response.json({
+                                            message: "User updated with pet data"
+                                        });
+                                    }
+                                    else {
+                                        console.log('Pet was successfully linked to user.', result);
+                                        response.redirect('/profile/');
+                                    }
+                                }
+                            });
                         }
                     });
-                }
-    });
+
+
+                // }
+    // });
 });
 
 
