@@ -8,7 +8,7 @@ server.use(express.static('public'));
 // Port for server to run
 var port = 3000;
 
-// Load body parser module
+// Load body parser module.
 var bodyParser = require ('body-parser');
 
 // Set express to use body parser to pull from POST requests
@@ -148,6 +148,10 @@ server.use('/', basicRoutes);
 var postRoutes = require ('./routes/post/post.js');
 
 server.use ('/post', postRoutes);
+
+var eventRoutes = require ('./routes/event.js');
+
+server.use ('/event', eventRoutes);
 
 // Connect the user routes
 var userRoutes = require ('./routes/user/admin.js');
