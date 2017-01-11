@@ -1,0 +1,28 @@
+<h2>Event</h2>
+
+<a class="btn btn-warning" href="/event/{{ data.event.id }}/edit">Edit Event</a>
+<a class="btn btn-danger" href="/event/{{ data.event.id }}/delete">Delete Event</a>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div>
+            <strong>Name: </strong>{{data.post.name}}
+        </div>
+
+        <div>
+            <strong>date:</strong> {{ data.event.date }}
+        </div>
+
+        <div>
+            <strong>time:</strong> {{ data.event.time }}
+        </div>
+
+        <div>
+            <strong>location:</strong> {{ data.event.location }}
+        </div>
+
+        <div>
+            <strong>description:</strong> {{ data.event.description }}
+        </div>
+    </div>
+</div>

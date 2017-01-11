@@ -3,26 +3,27 @@ var router = express.Router ();
 
 var Post = require ('../../model/post.js');
 
-router.use (function (request, response, next) {
-    var user = request.session.user;
-    console.log ('***User', user)
-    if (user && user.type == 'admin') {
-        next ();
-    }
-    else {
-        request.flash ('error', 'Access forbidden.');
-        response.redirect ('/error');
-    }
-});
+// router.use (function (request, response, next) {
+//     var user = request.session.user;
+//     console.log ('***User', user)
+//     console.log("Wront Route!");
+//     if (user && user.type == 'admin') {
+//         next ();
+//     }
+//     else {
+//         request.flash ('error', 'Access forbidden.');
+//         response.redirect ('/error');
+//     }
+// });
 
 router.get ('/create', function (request, response) {
-    response.send ('This is the post creation page.');
-    // response.render ('post/edit', {
-    //     data:{
-    //         title: 'Add Post',
-    //         method: 'POST'
-    //     }
-    // });
+    // response.send ('This is the post creation page.');
+    response.render ('post/edit', {
+        data:{
+            title: 'Add Post',
+            method: 'POST'
+        }
+    });
 });
 
 router.post ('/', function (request, response) {
@@ -108,11 +109,12 @@ router.put ('/:id', function (request, response) {
 });
 
 // Create a route to delete a post by id.
-router.delete ('/:id', function (request, response) {
+router.get ('/:id/delete', function (request, response) {
     // response.send ('The post was deleted.');
     var postId = request.params.id;
 
-    Post.findByIdAndRemove (postId, function (error, result) {
+    Post.findByIdAndRemove (
+        postId, function (error, result) {
         if (error) {
             // ...
         }

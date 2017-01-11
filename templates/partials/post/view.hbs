@@ -1,7 +1,7 @@
 <h2> Post view</h2>
 
-<a class="btn btn-primary" href="/post/{{ data.post.id }}/edit">Edit Post</a>
-    <a class="btn btn-danger" href="/post/{{ data.post.id }}/delete">Delete Post</a>
+<a class="btn btn-primary" href="/post/admin/{{ data.post.id }}/edit">Edit Post</a>
+<a class="btn btn-danger" href="/post/admin/{{ data.post.id }}/delete">Delete Post</a>
 
 
 
@@ -10,9 +10,13 @@
         <div>
             <strong>Name: </strong>{{data.post.name}}
         </div>
-        <div class="">
+
+        <div>
             <strong>Author: </strong>{{data.post.author}}
         </div>
-        <div class="">
+
+        <div>
             <strong>Description: </strong>{{data.post.description}}
         </div>
+    <div>
+</div>
