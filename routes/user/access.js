@@ -40,13 +40,13 @@ router.post('/login', function(request, response) {
                 console.log('***Test: ', request);
             }
             else {
-                console.log('This is the found user: ', result);
+                // console.log('This is the found user: ', result);
 
                 request.session.user = {
                     username: result.username,
                     email: result.email
                 }
-                console.log('This is the session data: ', request.session);
+                // console.log('This is the session data: ', request.session);
 
                 response.redirect('/profile/');
             }
@@ -271,16 +271,6 @@ router.post ('/register', function (request, response) {
     });
 
 
-});
-
-router.get ('/profile', function(request, response) {
-    console.log('session: ', request.session);
-
-    response.render('profile', {
-        data: {
-            user: request.session.user
-        }
-    });
 });
 
 router.get('/logout', function(request, response) {

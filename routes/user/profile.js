@@ -6,11 +6,29 @@ var User = require('../../model/user.js');
 var Pets = require('../../model/pets.js');
 
 router.get ('/', function(request, response) {
-    console.log('session: ', request.session);
+    console.log('session: ', request.session.user.username);
 
-    response.render('profile', {
-        data: {
-            user: request.session.user
+    User.findOne({username:request.session.user.username})
+    .populate('pets')
+    .exec(function(error, result) {
+        if (error) {
+            var errorMessage = 'Unable to load user data from username: ' //, request.session.user.username;
+            console.error('***ERROR: ', errorMessage);
+            response.send(errorMessage);
+        }
+        else {
+            if (request.sendJson) {
+                response.json(result);
+            }
+            else {
+                console.log('*****RESULT: ', result);
+                response.render('profile', {
+                    data: {
+                        user: result,
+                        info: result.pets[0]
+                    }
+                });
+            }
         }
     });
 });
