@@ -33,6 +33,7 @@ router.get('/', function(request, response) {
         });
 });
 
+// Route to add a new pet to an existing user
 router.get('/addpet', function(request, response) {
     var list = [{
             value: 'Dog'
@@ -63,7 +64,8 @@ router.get('/addpet', function(request, response) {
     });
 });
 
-router.post('/addpet', function(request, response) {
+
+router.post('/', function(request, response) {
     // console.log('***Input Received: ', request.body);
 
     var updateUser = request.session.user;
@@ -100,6 +102,89 @@ router.post('/addpet', function(request, response) {
 
 });
 
+// Get a specific pet by ID
+router.get('/:id', function(request, response) {
+    var petId = request.params.id;
+    console.log(petId);
+
+    Pets.findById(petId, function(error, result) {
+        if (error) {
+            console.error('There was an error retreiving this pet by id');
+            response.send('There was an error retreiving this pet by id');
+        }
+        else {
+            console.log('Found pet: ', result);
+            response.render('profile/viewpet', {
+                data: {
+                    pet: result
+                }
+            });
+        }
+    });
+
+});
+
+// Show edit pet form
+router.get('/:id/edit', function(request, response) {
+    var petId = request.params.id;
+
+    Pets.findById (petId, function(error, result) {
+        if (error) {
+            var errorMessage = 'Unable to find pet by id: ' + petId;
+            console.error('***ERROR: ', errorMessage);
+            response.send(errorMessage);
+        }
+        else {
+            var list = [
+                {value: 'Dog'},
+                {value: 'Cat'},
+                {value: 'Bird'},
+                {value: 'Reptile'}
+            ]
+
+            var key, item;
+            for (key in list) {
+                item = list [key];
+
+                if (result.type.toLowerCase () == item.value.toLowerCase ()) {
+                    // Set that the type is selected.
+                    item.selected = 'selected';
+                }
+            }
+
+            response.render('profile/editpet', {
+                data: {
+                    title: 'Edit Pet Info',
+                    method: 'PUT',
+                    pets: result,
+                    typeList: list
+                }
+            });
+        }
+    });
+});
+
+// update existing pet data
+router.put('/:id', function(request, response) {
+    var petId = request.params.id;
+    console.log(petId);
+
+    Pets.findByIdAndUpdate (petId, request.body, function (error, result) {
+        if (error) {
+            console.error('***ERROR: Unable to update pet', error);
+        }
+        else {
+            if (request.sendJson) {
+                response.json({
+                    message:"Pet entry was updated."
+                });
+            }
+            else {
+                response.redirect('/profile/'+ petId);
+            }
+        }
+    });
+});
 
 
 

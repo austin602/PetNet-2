@@ -1,7 +1,7 @@
 <h2>{{data.title}}</h2>
 
 <div>
-    <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded" action="/profile/addpet">
+    <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded" action="/profile/{{data.pets.id}}">
         <input name="_method" type="hidden" value="{{data.method}}">
 
         <div class="form-group">
