@@ -1,7 +1,7 @@
 <h2>{{data.title}}</h2>
 
 <div>
-    <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded" action="/profile/{{data.pets.id}}">
+    <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded" action="/profile/pets/{{data.pets.id}}">
         <input name="_method" type="hidden" value="{{data.method}}">
 
         <div class="form-group">
@@ -27,7 +27,7 @@
         <br>
         <div class="form-group">
             <label>Pet Biography: </label>
-            <input class="form-control" name="bio" type="text-area" value="{{data.pets.bio}}">
+            <textarea class="form-control" name="bio" value="{{data.pets.bio}}"></textarea>
         </div>
         <br>
         <button type="submit" class="btn btn-success">{{data.title}}</button>

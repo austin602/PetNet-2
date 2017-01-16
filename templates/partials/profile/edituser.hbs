@@ -1,0 +1,25 @@
+<h2>Edit Your Profile Information</h2>
+
+<div>
+    <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded"
+    action="#">
+        <input name="_method" type="hidden" value="PUT">
+
+        <div class="form-group">
+            <label>Username: </label>
+            <input class="form-control" name="username" type="text" value="{{data.user.username}}" required="true">
+        </div>
+        <div class="form-group">
+            <label>Email: </label>
+            <input class="form-control" name="email" type="email" value="{{data.user.email}}" required="true">
+        </div>
+        <br>
+        <div class="form-group">
+            <label>Biography: </label>
+            <textarea class="form-control" name="bio" value="{{data.user.bio}}"></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-danger">Save Changes</button>
+    </form>
+
+</div>

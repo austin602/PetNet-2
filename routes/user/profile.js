@@ -6,8 +6,8 @@ var User = require('../../model/user.js');
 var Pets = require('../../model/pets.js');
 
 router.get('/', function(request, response) {
-    console.log('session: ', request.session.user.username);
-
+    // console.log('session: ', request.session.user.username);
+if (request.session.user){
     User.findOne({
             username: request.session.user.username
         })
@@ -31,6 +31,9 @@ router.get('/', function(request, response) {
                 }
             }
         });
+    } else {
+        response.redirect('/user/login');
+    }
 });
 
 // Route to add a new pet to an existing user
@@ -65,7 +68,7 @@ router.get('/addpet', function(request, response) {
 });
 
 
-router.post('/', function(request, response) {
+router.post('/pets', function(request, response) {
     // console.log('***Input Received: ', request.body);
 
     var updateUser = request.session.user;
@@ -102,8 +105,51 @@ router.post('/', function(request, response) {
 
 });
 
+// Get a specific user by ID
+router.get('/user/:id', function(request, response) {
+    // console.log('***TEST:', request.params.id);
+    var userId = request.params.id;
+
+    User.findById(userId, function(error, result) {
+        if (error) {
+            console.error('There was an error retreiving this user by id.');
+            response.send('There was an error retreiving this user by id.');
+        }
+        else {
+            console.log('Found user: ', result);
+            response.render('profile/edituser', {
+                data: {
+                    user: result
+                }
+            });
+        }
+    });
+});
+
+// Update user profile data
+router.put ('/user/:id', function(request, response){
+    var userId = request.params.id;
+
+    User.findByIdAndUpdate (userId, request.body, function(error, result) {
+        if (error) {
+            console.error('There was an error updating user information.');
+            console.error(error);
+        }
+        else {
+            if (request.sendJson) {
+                response.Json ({
+                    message: "User was updated successfully"
+                });
+            }
+            else {
+                response.redirect('/profile/');
+            }
+        }
+    });
+});
+
 // Get a specific pet by ID
-router.get('/:id', function(request, response) {
+router.get('/pets/:id', function(request, response) {
     var petId = request.params.id;
     console.log(petId);
 
@@ -125,7 +171,7 @@ router.get('/:id', function(request, response) {
 });
 
 // Show edit pet form
-router.get('/:id/edit', function(request, response) {
+router.get('/pets/:id/edit', function(request, response) {
     var petId = request.params.id;
 
     Pets.findById (petId, function(error, result) {
@@ -165,7 +211,7 @@ router.get('/:id/edit', function(request, response) {
 });
 
 // update existing pet data
-router.put('/:id', function(request, response) {
+router.put('/pets/:id', function(request, response) {
     var petId = request.params.id;
     console.log(petId);
 
@@ -180,7 +226,7 @@ router.put('/:id', function(request, response) {
                 });
             }
             else {
-                response.redirect('/profile/'+ petId);
+                response.redirect('/profile/pets/'+ petId);
             }
         }
     });
