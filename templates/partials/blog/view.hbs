@@ -1,27 +1,27 @@
-<h2> Post view</h2>
+<h2> Blog Post view</h2>
 
-<a class="btn btn-primary" href="/post/admin/{{ data.post.id }}/edit">Edit Post</a>
-<a class="btn btn-danger" href="/post/admin/{{ data.post.id }}/delete">Delete Post</a>
+<a class="btn btn-primary" href="/blog/admin/{{ data.blog.id }}/edit">Edit Post</a>
+<a class="btn btn-danger" href="/blog/admin/{{ data.blog.id }}/delete">Delete Post</a>
 
 
 
 <div class="panel panel-default">
     <div class="panel-body">
         <div>
-            <strong>Name: </strong>{{data.post.name}}
+            <strong>Name: </strong>{{data.blog.name}}
         </div>
 
         <div>
-            <strong>Author: </strong>{{data.post.author}}
+            <strong>Author: </strong>{{data.blog.author}}
         </div>
 
         <div>
-            <strong>Description: </strong>{{data.post.description}}
+            <strong>Description: </strong>{{data.blog.description}}
         </div>
     <div>
 </div>
 
-{{#each data.post.comments }}
+{{#each data.blog.comments }}
     <div class="panel panel-default">
         <div class= "panel-body">
             <a href="/user/{{ author.id }}">{{ author.username }}</a>
@@ -31,10 +31,9 @@
     </div>
 {{/each }}
 
-{{#if user }}
 <div class="panel panel-default">
     <div class="panel-body">
-        <form method="POST" enctype="application/x-www-form-urlencoded" action="/post/admin/{{ data.post.id }}/comment">
+        <form method="POST" enctype="application/x-www-form-urlencoded" action="/blog/admin/{{ data.blog.id }}/comment">
             <div class="form-group">
                 <label>Comment:</label>
                 <textarea class="form-control" name="content"></textarea>
@@ -45,4 +44,3 @@
         </div>
     </div>
 </div>
-{{/if}}
