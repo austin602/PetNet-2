@@ -1,0 +1,42 @@
+<h2>{{data.title}}</h2>
+
+<div>
+    <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded" action="/profile/pets/{{data.pets.id}}">
+        <input name="_method" type="hidden" value="{{data.method}}">
+
+        <div class="form-group">
+            <label>Name: </label>
+            <input class="form-control" name="name" type="text" value="{{data.pets.name}}">
+        </div>
+        <br>
+        <div class="form-group">
+            <div class="dropdown">
+                <label>Type: </label>
+                <select name="type">
+                    {{#each data.typeList}}
+                    <option value="{{value}}" {{selected}}> {{ value }}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <label>Breed: </label>
+            <input class="form-control" name="breed" type="text" value="{{data.pets.breed}}">
+        </div>
+        <br>
+        <div class="form-group">
+            <label>Pet Biography: </label>
+            <textarea class="form-control" name="bio" value="{{data.pets.bio}}"></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-success">{{data.title}}</button>
+    </form>
+</div>
+
+<script>
+$('.dropdown-menu li').click(function(){
+    var textLabel = $(this).text ();
+    $(this).parent ().parent().find('button').text (textLabel);
+});
+</script>

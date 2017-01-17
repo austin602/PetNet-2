@@ -15,7 +15,7 @@ var User = require('../../model/user.js');
 
 router.get('/login', function(request, response) {
     if (request.session.user) {
-        response.redirect('/');
+        response.redirect('/profile/');
     }
     else {
         response.render('login');
@@ -38,17 +38,18 @@ router.post('/login', function(request, response) {
             else if (!result) {
                 request.flash('error', 'Your username or password is not correct');
                 console.log('***Test: ', request);
+                response.redirect('login');
             }
             else {
-                console.log('This is the found user: ', result);
+                // console.log('This is the found user: ', result);
 
                 request.session.user = {
                     username: result.username,
                     email: result.email
                 }
-                console.log('This is the session data: ', request.session);
+                // console.log('This is the session data: ', request.session);
 
-                response.redirect('/user/profile');
+                response.redirect('/profile/');
             }
         }
     );
@@ -154,6 +155,11 @@ router.get('/register', function(request, response) {
 //         }
 //     )
 // });
+
+// Check for existing user
+// Create basic email title and body
+// Add new user to database
+// Send confirmation email to provided email
 
 router.post ('/register', function (request, response) {
     // response.send ('New user');
@@ -266,16 +272,6 @@ router.post ('/register', function (request, response) {
     });
 
 
-});
-
-router.get ('/profile', function(request, response) {
-    console.log('session: ', request.session);
-
-    response.render('profile', {
-        data: {
-            user: request.session.user
-        }
-    });
 });
 
 router.get('/logout', function(request, response) {

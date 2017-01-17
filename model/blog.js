@@ -8,7 +8,7 @@ var blogSchema = new Schema ({
     description: String,
     author: String,
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment'}]
-    // author: {type: Schema.Types.ObjectId, ref: 'User'},
+    // author: {type: Schema.Types.ObjectId, ref: 'User'}
 });
 var Blog = mongoose.model ('Blog' , blogSchema);
 

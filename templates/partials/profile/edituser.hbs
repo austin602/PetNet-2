@@ -1,0 +1,38 @@
+<h2>Edit Your Profile Information</h2>
+
+<div>
+    <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded"
+    action="#">
+        <input name="_method" type="hidden" value="PUT">
+
+        <div class="form-group">
+            <label for="username">Username: </label>
+            <input class="form-control" name="username" type="text" value="{{data.user.username}}" required="true">
+        </div>
+        <div class="form-group">
+            <label for="email">Email: </label>
+            <input class="form-control" name="email" type="email" value="{{data.user.email}}" required="true">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="bio">Biography: </label>
+            <textarea class="form-control" name="bio" value="{{data.user.bio}}" rows="5">{{data.user.bio}}</textarea>
+        </div>
+        <br>
+        <h3>What kind of pets do you have? (select all that apply)</h3>
+        <div class="checkbox">
+            <label for="petType"><input type="checkbox" name="petType[]" value="dog">Dog</label>
+        </div>
+        <div class="checkbox">
+            <label for="petType"><input type="checkbox" name="petType[]" value="cat">Cat</label>
+        </div>
+        <div class="checkbox">
+            <label for="petType"><input type="checkbox" name="petType[]" value="bird">Bird</label>
+        </div>
+        <div class="checkbox">
+            <label for="petType"><input type="checkbox" name="petType[]" value="reptile">Reptile</label>
+        </div>
+        <button type="submit" class="btn btn-danger">Save Changes</button>
+    </form>
+
+</div>

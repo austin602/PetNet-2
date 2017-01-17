@@ -6,7 +6,12 @@ var userSchema = new Schema ({
     username: String,
     password: String,
     email: String,
-    admin: Boolean
+    admin: Boolean,
+    bio: String,
+    picture: String,
+    // Linking pet object by objects ID
+    pets: [{ type: Schema.Types.ObjectId, ref: 'Pets'}],
+    petType: String
 });
 
 var User = mongoose.model('User', userSchema);
