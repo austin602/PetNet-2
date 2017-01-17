@@ -4,6 +4,7 @@ var router = express.Router ();
 var adminRoutes = require ('./admin.js');
 router.use ('/admin', adminRoutes);
 
+// Load the Post and Comment schema object.
 var Post = require ('../../model/post.js');
 
 // Route to view my posts.
@@ -38,14 +39,17 @@ router.get ('/:id', function (request, response) {
     // Grab the post id by the ':id' value in the url path.
     var postId = request.params.id;
 
-    Post.findById (postId, function (error, result) {
+    Post.findById (postId)
+    .populate ({
+        path: 'comments'
+    })
+    .exec (function (error, result) {
         if (error) {
             var errorMessage = 'Unable to find post by id.';
-            console.error ('*** ERROR: ' + errorMessage);
+            console.error ('***ERROR: ' + errorMessage);
             response.send (errorMessage);
         }
         else {
-
             if (request.sendJson == true) {
                 response.json (result);
             }
@@ -60,27 +64,4 @@ router.get ('/:id', function (request, response) {
     });
 });
 
-
-// // Create a route to delete a post by id.
-// router.get ('/:id/delete', function (request, response) {
-//     // response.send ('The post was deleted.');
-//     var postId = request.params.id;
-//
-//     Post.findByIdAndRemove (postId, function (error, result) {
-//         if (error) {
-//             // ...
-//         }
-//         else {
-//             if (request.sendJson) {
-//                 response.json ({
-//                     message: 'post was deleted.'
-//                 })
-//             }
-//             else {
-//                 response.redirect ('/post');
-//             }
-//         }
-//     })
-// });
-// Export the router for use outside of module.
 module.exports = router;

@@ -1,14 +1,14 @@
-<h2>Post List</h2>
+<h2>Blog Post List</h2>
 
 
-<a class="btn btn-primary" href="/post/admin/create">Create Post</a>
+<a class="btn btn-primary" href="/blog/admin/create">Create Post</a>
 
 
-{{#each data.postList}}
+{{#each data.blogList}}
     <div class="panel panel-default">
         <div class="panel-body">
             <div>
-                <strong>name: </strong> <a href="/post/{{ id }}">{{ name }}</a>
+                <strong>name: </strong> <a href="/blog/{{ id }}">{{ name }}</a>
             </div>
             <div>
                 <strong>author: </strong>{{ author }}

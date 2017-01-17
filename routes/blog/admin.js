@@ -1,7 +1,7 @@
 var express = require ('express');
 var router = express.Router ();
 
-var Post = require ('../../model/post.js');
+var Blog = require ('../../model/blog.js');
 var Comment = require ('../../model/comment.js');
 
 // router.use (function (request, response, next) {
@@ -18,7 +18,7 @@ var Comment = require ('../../model/comment.js');
 
 router.get ('/create', function (request, response) {
     // response.send ('This is the post creation page.');
-    response.render ('post/edit', {
+    response.render ('blog/edit', {
         data:{
             title: 'Add Post',
             method: 'POST'
@@ -28,11 +28,11 @@ router.get ('/create', function (request, response) {
 
 router.post ('/', function (request, response) {
 
-    var newPost = Post (request.body);
+    var newBlog = Blog (request.body);
 
-    console.log ("body: ", newPost);
+    console.log ("body: ", newBlog);
 
-    newPost.save (function (error, result) {
+    newBlog.save (function (error, result) {
         if (error) {
             var errorMessage = 'Unable to save post.';
             console.error ('*** ERROR: ' + errorMessage);
@@ -44,7 +44,7 @@ router.post ('/', function (request, response) {
             request.flash ('success', 'post was created.');
 
             // Redirect back to the post create page.
-            response.redirect ('/post');
+            response.redirect ('/blog');
         }
 
     });
@@ -53,21 +53,21 @@ router.post ('/', function (request, response) {
 
 router.get ('/:id/edit', function (request, response) {
     // Grab the post id by the ':id' value in the url path.
-    var postId = request.params.id;
+    var blogId = request.params.id;
 
     // Run a query for our post by an id.
-    Post.findById (postId, function (error, result) {
+    Blog.findById (blogId, function (error, result) {
         if (error) {
             var errorMessage = ('UNable to find post by id: ' + postId);
             console.error ('*** ERROR: ' + errorMessage);
             response.send (errorMessage);
         }
         else {
-            response.render ('post/edit', {
+            response.render ('blog/edit', {
                 data: {
                     title: 'Edit post',
                     method: 'PUT',
-                    post: result
+                    blog: result
                 }
             });
         }
@@ -76,11 +76,11 @@ router.get ('/:id/edit', function (request, response) {
 
 // Create a route to handle updating an existing post.
 router.put ('/:id', function (request, response) {
-    var postId = request.params.id;
+    var blogId = request.params.id;
 
-    Post.findByIdAndUpdate (
+    Blog.findByIdAndUpdate (
         // id to search by
-        postId,
+        blogId,
 
         // What needs to be udpdated.
         request.body,
@@ -101,7 +101,7 @@ router.put ('/:id', function (request, response) {
 
                     // Redirect back to the specific post so we
                     // can confirm the changes to the post.
-                    response.redirect ('/post/' + postId);
+                    response.redirect ('/blog/' + blogId);
                 }
             }
         }
@@ -109,11 +109,11 @@ router.put ('/:id', function (request, response) {
 });
 
 // Create a route to delete a post by id.
-router.delete ('/:id', function (request, response) {
+router.get ('/:id/delete', function (request, response) {
     // response.send ('The post was deleted.');
-    var postId = request.params.id;
+    var blogId = request.params.id;
 
-    Post.findByIdAndRemove (postId, function (error, result) {
+    Blog.findByIdAndRemove (blogId, function (error, result) {
         if (error) {
             // ...
         }
@@ -124,7 +124,7 @@ router.delete ('/:id', function (request, response) {
                 })
             }
             else {
-                response.redirect ('/post');
+                response.redirect ('/blog');
             }
         }
     })
@@ -132,11 +132,11 @@ router.delete ('/:id', function (request, response) {
 
 // Create a route to save comments.
 router.post ('/:id/comment', function (request, response) {
-    var postId = request.params.id
+    var blogId = request.params.id
 
-    Post.findById ( postId, function (error, post) {
+    Blog.findById ( blogId, function (error, post) {
         if (error) {
-            var errorMessage = 'unable to create' + postId
+            var errorMessage = 'unable to create' + blogId
             console.log('****error: ' + errorMessage);
             response.send (errorMessage);
         }
@@ -157,7 +157,7 @@ router.post ('/:id/comment', function (request, response) {
 
                     post.save (function (error, postResult) {
                         // response.send ('saving the message')
-                        response.redirect ('/post/' + postId)
+                        response.redirect ('/blog/' + blogId)
                     });
                 }
             });

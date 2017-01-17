@@ -145,9 +145,9 @@ var basicRoutes = require('./routes/basic.js');
 
 server.use('/', basicRoutes);
 
-var postRoutes = require ('./routes/post/post.js');
+var blogRoutes = require ('./routes/blog/blog.js');
 
-server.use ('/post', postRoutes);
+server.use ('/blog', blogRoutes);
 
 var eventRoutes = require ('./routes/event.js');
 
