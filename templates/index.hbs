@@ -12,23 +12,22 @@
 
     <!-- set options before less.js script -->
     <script>
-        less = {
-            env: "development",
-            async: false,
-            fileAsync: false,
-            poll: 1000,
-            functions: {},
-            dumpLineNumbers: "comments",
-            relativeUrls: false,
-            rootpath: ":/a.com/"
-        };
+    less = {
+        env: "development",
+        async: false,
+        fileAsync: false,
+        poll: 1000,
+        functions: {},
+        dumpLineNumbers: "comments",
+        relativeUrls: false,
+        rootpath: ":/a.com/"
+    };
     </script>
     <script src="/lib/less/dist/less.js"></script>
     <script src="/lib/jquery/dist/jquery.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 
-</head>
 
 <body>
     <nav class="navbar navbar-inverse">
@@ -44,36 +43,38 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
                     <li><a href='/'>Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="/post">Post</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/event">Event</a></li>
                     {{#if user}}
                     <li><a href="/profile/search">Search</a></li>
                     {{/if}}
+
                 </ul>
                 {{#if user }}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/profile/"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                        <li><a href="/user/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                    </ul>
-                    {{else }}
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                        <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/profile/"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                    <li><a href="/user/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                </ul>
+                {{else }}
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                    <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
                 {{/if}}
+
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    {{{ body }}}
+        {{{ body }}}
 
-    <script>
+        <script>
         $(".nav a").on("click", function() {
             $(".nav").find(".active").removeClass("active");
             $(this).parent().addClass("active");
         });
-    </script>
-</body>
+        </script>
+    </body>
 
 </html>
