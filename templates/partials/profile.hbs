@@ -1,21 +1,22 @@
-<div class="user-display">
-<h3>User Profile for: {{data.user.username}}</h3>
-<h3>Email: {{data.user.email}}</h3>
-<h3>Biography: {{data.user.bio}}</h3>
-<a class="btn btn-warning" href="/profile/user/{{data.user._id}}">Edit Profile</a>
+<div clas="container-fluid">
+    <div class='col-md-4 col-md-offset-4'>
+        <div class="user-display">
+        <h3>User Profile for: {{data.user.username}}</h3>
+        <h3>Email: {{data.user.email}}</h3>
+        <h3>Biography: {{data.user.bio}}</h3>
+        <a class="btn btn-warning" href="/profile/user/{{data.user._id}}">Edit Profile</a>
+        </div>
+        <br>
+        {{#each data.info}}
+        <div class="pet-display">
+        <h3>Pet Name: <a href="/profile/pets/{{_id}}">{{name}}</a></h3>
+        <h3>Pet Type: {{type}}</h3>
+        <h3>Pet Breed: {{breed}}</h3>
+        <h3>Pet Biography: {{bio}}</h3>
+        <a class="btn btn-warning" href="/profile/pets/{{_id}}/edit">Edit Pet Info</a>
+        </div>
+        <br>
+        {{/each}}
+        <a class="btn btn-primary" href="/profile/addpet">Add Pet</a>
+    </div>
 </div>
-<br>
-{{#each data.info}}
-<div class="pet-display">
-<h3>Pet Name: <a href="/profile/pets/{{_id}}">{{name}}</a></h3>
-<h3>Pet Type: {{type}}</h3>
-<h3>Pet Breed: {{breed}}</h3>
-<h3>Pet Biography: {{bio}}</h3>
-<a class="btn btn-warning" href="/profile/pets/{{_id}}/edit">Edit Pet Info</a>
-</div>
-<br>
-{{/each}}
-
-
-
-<a class="btn btn-primary" href="/profile/addpet">Add Pet</a>

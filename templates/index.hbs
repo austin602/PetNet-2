@@ -47,6 +47,9 @@
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li><a href="/post">Post</a></li>
+                    {{#if user}}
+                    <li><a href="/profile/search">Search</a></li>
+                    {{/if}}
                 </ul>
                 {{#if user }}
                     <ul class="nav navbar-nav navbar-right">

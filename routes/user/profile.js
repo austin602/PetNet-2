@@ -232,7 +232,80 @@ router.put('/pets/:id', function(request, response) {
     });
 });
 
+// route for displaying the pet owner category page
+router.get('/search', function(request, response) {
+    if (request.session.user) {
+        // User.find({}, function(error, result) {
+        //     if (error) {
+        //         console.error('***ERROR: unable to retrieve user data', error);
+        //     }
+        //     else {
+        //         response.render('profile/search', {
+        //             data: {
+        //                 user: result
+        //             }
+        //         });
+        //     }
+        // });
+        response.render('profile/search');
+    }
+    else {
+        response.redirect('/user/login');
+    }
+});
 
+router.get('/search/:petType', function(request, response) {
+    console.log('***TEST: ', request.params.petType);
+    var petType = request.params.petType;
+    if (request.session.user) {
+        User.find({petType}, function(error, result) {
+            if (error) {
+                console.error('***ERROR: Unable to retrieve users by petType', error);
+            }
+            else {
+                console.log('********************', result);
+                response.render('profile/searchlist', {
+                    data: {
+                        title: 'Results for ' + petType + ' owners',
+                        user: result
+                    }
+                });
+            }
+        });
+    }
+    else {
+        response.redirect('/user/login')
+    }
+});
+
+router.get('/search/user/:id', function(request, response) {
+    var userId = request.params.id
+    // console.log('***********USER REQUEST: ', request.params);
+    if (request.session.user) {
+        User.findById(userId)
+        .populate('pets')
+        .exec(function(error, result) {
+            if (error) {
+                console.error('***ERROR: ', error);
+                response.send(error);
+            }
+            else {
+                if (request.sendJson) {
+                    response.json(result);
+                }
+                else {
+                    console.log('***Successfully located user by id: ', userId);
+                    response.render('profile/viewprofile', {
+                        data: {
+                            user: result,
+                            info: result.pets
+                        }
+                    });
+                }
+            }
+        });
+    }
+});
 
 
 module.exports = router;
