@@ -129,7 +129,7 @@ router.get('/user/:id', function(request, response) {
 // Update user profile data
 router.put ('/user/:id', function(request, response){
     var userId = request.params.id;
-
+    // console.log('****TEST: ', request.body);
     User.findByIdAndUpdate (userId, request.body, function(error, result) {
         if (error) {
             console.error('There was an error updating user information.');
