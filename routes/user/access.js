@@ -38,6 +38,7 @@ router.post('/login', function(request, response) {
             else if (!result) {
                 request.flash('error', 'Your username or password is not correct');
                 console.log('***Test: ', request);
+                response.redirect('login');
             }
             else {
                 // console.log('This is the found user: ', result);
