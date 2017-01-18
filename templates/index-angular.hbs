@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PetNet Angular App</title>
+        <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="/css/style.less" rel="stylesheet" type="text/less">
+
+        <script>
+         less = {
+           env: "development",
+           async: false,
+           fileAsync: false,
+           poll: 1000,
+           functions: {},
+           dumpLineNumbers: "comments",
+           relativeUrls: false,
+           rootpath: ":/a.com/"
+         };
+        </script>
+        <script src="/lib/less/dist/less.js"></script>
+        <script src="/lib/jquery/dist/jquery.js"></script>
+        <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    </head>
+    <body ng-app="App">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">PetNet</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li><a href='/angular/#/home'>Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/event">Event</a></li>
+                        {{#if user}}
+                        <li><a href="/profile/search">Search</a></li>
+                        {{/if}}
+
+                    </ul>
+                    {{#if user }}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/profile/"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                        <li><a href="/user/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
+                    {{else }}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/user/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                        <li><a href="/user/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                    {{/if}}
+
+                </div>
+            </nav>
+
+        <div ui-view></div>
+
+            <p>Angular Page</p>
+
+        <script src="/lib/angular/angular.js"></script>
+        <script src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
+
+        <script src="/js/angular/app.js"></script>
+    </body>
+</html>

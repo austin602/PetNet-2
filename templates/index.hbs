@@ -4,9 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>PetNet Project</title>
-    <!-- <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script> <script src="semantic/dist/semantic.min.js"></script> -->
-
     <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="/css/style.less" rel="stylesheet" type="text/less">
 
@@ -47,6 +44,7 @@
                     <li><a href="/contact">Contact</a></li>
                     <li><a href="/blog">Blog</a></li>
                     <li><a href="/event">Event</a></li>
+                    <li><a href="/angular">Angular</a></li>
                     {{#if user}}
                     <li><a href="/profile/search">Search</a></li>
                     {{/if}}
@@ -69,12 +67,12 @@
 
         {{{ body }}}
 
-        <script>
+        <!-- <script>
         $(".nav a").on("click", function() {
             $(".nav").find(".active").removeClass("active");
             $(this).parent().addClass("active");
         });
-        </script>
+        </script> -->
     </body>
 
 </html>
