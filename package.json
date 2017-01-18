@@ -10,6 +10,8 @@
   "author": "Andrew Haddock",
   "license": "MIT",
   "dependencies": {
+    "angular": "^1.6.1",
+    "angular-ui-router": "^0.3.2",
     "bluebird": "^3.4.7",
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",

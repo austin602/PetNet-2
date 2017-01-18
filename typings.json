@@ -1,0 +1,7 @@
+{
+  "name": "petnetproject",
+  "dependencies": {
+    "angular": "registry:dt/angular#1.6.0+20170117142612",
+    "angular-ui-router": "registry:dt/angular-ui-router#1.1.5+20161222093745"
+  }
+}
