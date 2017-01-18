@@ -24,12 +24,10 @@ router.get ('/contact', function (request, response) {
     response.render ('contact');
 });
 
-// router.get ('/profile/', function(request, response) {
-//     response.render('profile', {
-//         data: {
-//             user: request.session.user
-//         }
-//     });
-// });
+router.get('/angular', function(request, response) {
+    response.render ('home', {
+        layout: 'index-angular'
+    });
+});
 
 module.exports = router;

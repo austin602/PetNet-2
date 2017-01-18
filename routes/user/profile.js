@@ -7,30 +7,30 @@ var Pets = require('../../model/pets.js');
 
 router.get('/', function(request, response) {
     // console.log('session: ', request.session.user.username);
-if (request.session.user){
-    User.findOne({
-            username: request.session.user.username
-        })
-        .populate('pets')
-        .exec(function(error, result) {
-            if (error) {
-                var errorMessage = 'Unable to load user data from username: ' //, request.session.user.username;
-                console.error('***ERROR: ', errorMessage);
-                response.send(errorMessage);
-            } else {
-                if (request.sendJson) {
-                    response.json(result);
+    if (request.session.user) {
+        User.findOne({
+                username: request.session.user.username
+            })
+            .populate('pets')
+            .exec(function(error, result) {
+                if (error) {
+                    var errorMessage = 'Unable to load user data from username: ' //, request.session.user.username;
+                    console.error('***ERROR: ', errorMessage);
+                    response.send(errorMessage);
                 } else {
-                    console.log('*****RESULT: ', result.pets);
-                    response.render('profile', {
-                        data: {
-                            user: result,
-                            info: result.pets
-                        }
-                    });
+                    if (request.sendJson) {
+                        response.json(result);
+                    } else {
+                        console.log('*****RESULT: ', result.pets);
+                        response.render('profile', {
+                            data: {
+                                user: result,
+                                info: result.pets
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
     } else {
         response.redirect('/user/login');
     }
@@ -114,8 +114,7 @@ router.get('/user/:id', function(request, response) {
         if (error) {
             console.error('There was an error retreiving this user by id.');
             response.send('There was an error retreiving this user by id.');
-        }
-        else {
+        } else {
             console.log('Found user: ', result);
             response.render('profile/edituser', {
                 data: {
@@ -127,21 +126,19 @@ router.get('/user/:id', function(request, response) {
 });
 
 // Update user profile data
-router.put ('/user/:id', function(request, response){
+router.put('/user/:id', function(request, response) {
     var userId = request.params.id;
     // console.log('****TEST: ', request.body);
-    User.findByIdAndUpdate (userId, request.body, function(error, result) {
+    User.findByIdAndUpdate(userId, request.body, function(error, result) {
         if (error) {
             console.error('There was an error updating user information.');
             console.error(error);
-        }
-        else {
+        } else {
             if (request.sendJson) {
-                response.Json ({
+                response.Json({
                     message: "User was updated successfully"
                 });
-            }
-            else {
+            } else {
                 response.redirect('/profile/');
             }
         }
@@ -157,8 +154,7 @@ router.get('/pets/:id', function(request, response) {
         if (error) {
             console.error('There was an error retreiving this pet by id');
             response.send('There was an error retreiving this pet by id');
-        }
-        else {
+        } else {
             console.log('Found pet: ', result);
             response.render('profile/viewpet', {
                 data: {
@@ -174,25 +170,31 @@ router.get('/pets/:id', function(request, response) {
 router.get('/pets/:id/edit', function(request, response) {
     var petId = request.params.id;
 
-    Pets.findById (petId, function(error, result) {
+    Pets.findById(petId, function(error, result) {
         if (error) {
             var errorMessage = 'Unable to find pet by id: ' + petId;
             console.error('***ERROR: ', errorMessage);
             response.send(errorMessage);
-        }
-        else {
-            var list = [
-                {value: 'Dog'},
-                {value: 'Cat'},
-                {value: 'Bird'},
-                {value: 'Reptile'}
+        } else {
+            var list = [{
+                    value: 'Dog'
+                },
+                {
+                    value: 'Cat'
+                },
+                {
+                    value: 'Bird'
+                },
+                {
+                    value: 'Reptile'
+                }
             ]
 
             var key, item;
             for (key in list) {
-                item = list [key];
+                item = list[key];
 
-                if (result.type.toLowerCase () == item.value.toLowerCase ()) {
+                if (result.type.toLowerCase() == item.value.toLowerCase()) {
                     // Set that the type is selected.
                     item.selected = 'selected';
                 }
@@ -215,24 +217,125 @@ router.put('/pets/:id', function(request, response) {
     var petId = request.params.id;
     console.log(petId);
 
-    Pets.findByIdAndUpdate (petId, request.body, function (error, result) {
+    Pets.findByIdAndUpdate(petId, request.body, function(error, result) {
         if (error) {
             console.error('***ERROR: Unable to update pet', error);
-        }
-        else {
+        } else {
             if (request.sendJson) {
                 response.json({
-                    message:"Pet entry was updated."
+                    message: "Pet entry was updated."
                 });
-            }
-            else {
-                response.redirect('/profile/pets/'+ petId);
+            } else {
+                response.redirect('/profile/pets/' + petId);
             }
         }
     });
 });
 
+router.get('/pets/:id/delete', function(request, response) {
+    var petId = request.params.id;
+    // console.log('Delete pet by id: ', petId);
+    if (request.session.user) {
+        User.findOneAndUpdate(request.session.user.username, {
+            $pop: {
+                pets: petId
+            }
+        }, function(error, removedPet) {
+            if (error) {
+                console.error('***ERROR: Unable to remove pet id from user data.', error);
+                response.send(error)
+            } else {
+                console.log('Pet was successfully delete from User database by id.');
+                Pets.findByIdAndRemove(removedPet, function(error, result) {
+                    if (error) {
+                        console.error('***ERROR: Unable to remove pet ID from user database.');
+                        response.send(error);
+                    } else {
+                        console.log('Pet was successfully removed from user.');
+                        response.redirect('/profile/');
+                    }
+                })
+            }
+        });
+    } else {
+        response.redirect('user/login');
+    }
 
+});
+
+// route for displaying the pet owner category page
+router.get('/search', function(request, response) {
+    if (request.session.user) {
+        // User.find({}, function(error, result) {
+        //     if (error) {
+        //         console.error('***ERROR: unable to retrieve user data', error);
+        //     }
+        //     else {
+        //         response.render('profile/search', {
+        //             data: {
+        //                 user: result
+        //             }
+        //         });
+        //     }
+        // });
+        response.render('profile/search');
+    } else {
+        response.redirect('/user/login');
+    }
+});
+
+// route to search for users by petType and render results on callback
+router.get('/search/:petType', function(request, response) {
+    console.log('***TEST: ', request.params.petType);
+    var petType = request.params.petType;
+    if (request.session.user) {
+        User.find({
+            petType
+        }, function(error, result) {
+            if (error) {
+                console.error('***ERROR: Unable to retrieve users by petType', error);
+            } else {
+                console.log('********************', result);
+                response.render('profile/searchlist', {
+                    data: {
+                        title: 'Results for ' + petType + ' owners',
+                        user: result
+                    }
+                });
+            }
+        });
+    } else {
+        response.redirect('/user/login')
+    }
+});
+
+// route to view specific user profile by id after search by petType
+router.get('/search/user/:id', function(request, response) {
+    var userId = request.params.id
+    // console.log('***********USER REQUEST: ', request.params);
+    if (request.session.user) {
+        User.findById(userId)
+            .populate('pets')
+            .exec(function(error, result) {
+                if (error) {
+                    console.error('***ERROR: ', error);
+                    response.send(error);
+                } else {
+                    if (request.sendJson) {
+                        response.json(result);
+                    } else {
+                        console.log('***Successfully located user by id: ', userId);
+                        response.render('profile/viewprofile', {
+                            data: {
+                                user: result,
+                                info: result.pets
+                            }
+                        });
+                    }
+                }
+            });
+    }
+});
 
 
 module.exports = router;

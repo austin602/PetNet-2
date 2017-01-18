@@ -11,7 +11,7 @@ var userSchema = new Schema ({
     picture: String,
     // Linking pet object by objects ID
     pets: [{ type: Schema.Types.ObjectId, ref: 'Pets'}],
-    petType: String
+    petType: [String]
 });
 
 var User = mongoose.model('User', userSchema);
