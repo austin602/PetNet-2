@@ -5,7 +5,8 @@
 
 
 {{#each data.blogList}}
-    <div class="panel panel-default">
+<div class="row">
+    <div class="col-md-6">
         <div class="panel-body">
             <div>
                 <strong>name: </strong> <a href="/blog/{{ id }}">{{ name }}</a>
@@ -18,4 +19,5 @@
             </div>
         </div>
     </div>
+</div>
 {{/each}}

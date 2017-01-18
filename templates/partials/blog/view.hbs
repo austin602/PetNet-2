@@ -4,21 +4,23 @@
 <a class="btn btn-danger" href="/blog/admin/{{ data.blog.id }}/delete">Delete Post</a>
 
 
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel-body">
+            <div>
+                <strong>Name: </strong>{{data.blog.name}}
+            </div>
 
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div>
-            <strong>Name: </strong>{{data.blog.name}}
-        </div>
+            <div>
+                <strong>Author: </strong>{{data.blog.author}}
+            </div>
 
-        <div>
-            <strong>Author: </strong>{{data.blog.author}}
+            <div>
+                <strong>Description: </strong>{{data.blog.description}}
+            </div>
         </div>
+    </div>
 
-        <div>
-            <strong>Description: </strong>{{data.blog.description}}
-        </div>
-    <div>
 </div>
 
 {{#each data.blog.comments }}
