@@ -4,26 +4,26 @@
 <a class="btn btn-primary" href="/event/create">Create Event</a>
 
 {{#each data.eventList }}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <div>
-                <strong>name: </strong> <a href="/event/{{ id }}">{{ name }}</a>
-            </div>
-            <div>
-                <strong>date: </strong> {{ date }}
-            </div>
+<div class="row">
+    <div class="col-md-6">
+        <div>
+            <strong>name: </strong> <a href="/event/{{ id }}">{{ name }}</a>
+        </div>
+        <div>
+            <strong>date: </strong> {{ date }}
+        </div>
 
-            <div>
-                <strong>time: </strong> {{ time }}
-            </div>
+        <div>
+            <strong>time: </strong> {{ time }}
+        </div>
 
-            <div>
-                <strong>location: </strong> {{ location }}
-            </div>
+        <div>
+            <strong>location: </strong> {{ location }}
+        </div>
 
-            <div>
-                <strong>description:</strong> {{ description }}
-            </div>
+        <div>
+            <strong>description:</strong> {{ description }}
         </div>
     </div>
+</div>
 {{/each }}
