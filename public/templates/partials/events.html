@@ -1,0 +1,28 @@
+<h2>Events Page</h2>
+
+<button class="btn btn-primary" ng-click="eventsController.read()">Show Forum Posts</button>
+
+<ul>
+    <li ng-repeat="post in eventsController.list">
+        <div>
+            <div>
+                <div>
+                    <strong>Name: </strong> {{ post.name }}
+                </div>
+                <div>
+                    <strong>Name: </strong> {{ post.date }}
+                </div>
+                <div>
+                    <strong>Name: </strong> {{ post.time }}
+                </div>
+                <div>
+                    <strong>Name: </strong> {{ post.location }}
+                </div>
+                <div>
+                    <strong>Name: </strong> {{ post.description }}
+                </div>
+                <br>
+            </div>
+        </div>
+    </li>
+</ul>
