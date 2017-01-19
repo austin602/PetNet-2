@@ -10,10 +10,6 @@ router.get('/', function(request, response) {
     });
 });
 
-router.get ('/admin', function (request, response) {
-    response.render ('home');
-});
-
 router.get ('/about', function (request, response) {
     // response.send ('reached about page.');
     response.render ('about');
