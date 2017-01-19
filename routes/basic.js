@@ -25,9 +25,14 @@ router.get ('/contact', function (request, response) {
 });
 
 router.get('/angular', function(request, response) {
-    response.render ('home', {
-        layout: 'index-angular'
-    });
+    if(request.session.user){
+        response.render ('home', {
+            layout: 'index-angular'
+        });
+    }
+    else {
+        response.render('user/login');
+    }
 });
 
 module.exports = router;

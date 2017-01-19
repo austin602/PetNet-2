@@ -1,7 +1,9 @@
 <h2>{{data.title}}</h2>
 
 <br>
-
-{{#each data.user}}
-<h3>Username: <a href="/profile/search/user/{{id}}">{{username}}</a></h3>
-{{/each}}
+<div class="results">
+    {{#each data.user}}
+    <a href="/profile/search/user/{{id}}"><img src="{{imageUrl}}"></a>
+    <h3>Username: <a href="/profile/search/user/{{id}}">{{username}}</a></h3>
+    {{/each}}
+</div>
