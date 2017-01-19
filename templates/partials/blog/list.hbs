@@ -1,8 +1,8 @@
 <h2>Blog Post List</h2>
 
-
+{{#if user }}
 <a class="btn btn-primary" href="/blog/admin/create">Create Post</a>
-
+{{/if }}
 
 {{#each data.blogList}}
 <div class="row">
