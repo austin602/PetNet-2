@@ -5,12 +5,17 @@ var Event = require ('../model/event.js');
 
 router.get ('/create', function (request, response) {
     // response.send ('This is the event create page.');
-    response.render ('event/edit', {
-        data: {
-            title: 'Create Event',
-            method: 'POST'
-        }
-    });
+    if (request.session.user) {
+        response.render ('event/edit', {
+            data: {
+                title: 'Create Event',
+                method: 'POST'
+            }
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
 });
 //NOTE:saves new event.
 router.post ('/', function (request, response) {
@@ -33,114 +38,135 @@ router.post ('/', function (request, response) {
 });
 
 router.get ('/', function (request, response) {
-
-    Event.find ({}, function (error, result) {
-        if (error) {
-            var errorMessage = 'Unable to load event.';
-            console.error ('***ERROR: ' + errorMessage);
-            response.send (errorMessage);
-        }
-        else {
-
-            if (request.sendJson) {
-                response.json (result);
+    if (request.session.user){
+        Event.find ({}, function (error, result) {
+            if (error) {
+                var errorMessage = 'Unable to load event.';
+                console.error ('***ERROR: ' + errorMessage);
+                response.send (errorMessage);
             }
             else {
-                response.render ('event/list', {
+
+                if (request.sendJson) {
+                    response.json (result);
+                }
+                else {
+                    response.render ('event/list', {
+                        data: {
+                            eventList: result
+                        }
+                    });
+                }
+            }
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
+});
+
+router.get ('/:id', function (request, response) {
+    var eventId = request.params.id;
+    if(request.session.user) {
+        Event.findById (eventId, function (error, result) {
+            if (error) {
+                var errorMessage = 'Unable to find event by id.';
+                console.error ('***ERROR: ' + errorMessage);
+                response.send (errorMessage);
+            }
+            else {
+                response.render ('event/view', {
                     data: {
-                        eventList: result
+                        event: result
                     }
                 });
             }
-        }
-    });
-});
-router.get ('/:id', function (request, response) {
-    var eventId = request.params.id;
-
-    Event.findById (eventId, function (error, result) {
-        if (error) {
-            var errorMessage = 'Unable to find event by id.';
-            console.error ('***ERROR: ' + errorMessage);
-            response.send (errorMessage);
-        }
-        else {
-            response.render ('event/view', {
-                data: {
-                    event: result
-                }
-            });
-        }
-    });
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
 });
 
 router.get ('/:id/edit', function (request, response) {
     var eventId = request.params.id;
-
-    Event.findById (eventId, function (error, result) {
-        if (error) {
-            var errorMessage = 'Unable to edit event by id: ' + eventId;
-            console.error ('*** ERROR: ' + errorMessage);
-            response.send (errorMessage);
-        }
-        else {
-            response.render ('event/edit', {
-                data: {
-                    title: 'Edit event',
-                    method: 'PUT',
-                    event: result
-                }
-            });
-        }
-    });
+    if(request.session.user) {
+        Event.findById (eventId, function (error, result) {
+            if (error) {
+                var errorMessage = 'Unable to edit event by id: ' + eventId;
+                console.error ('*** ERROR: ' + errorMessage);
+                response.send (errorMessage);
+            }
+            else {
+                response.render ('event/edit', {
+                    data: {
+                        title: 'Edit event',
+                        method: 'PUT',
+                        event: result
+                    }
+                });
+            }
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
 });
 
 router.put ('/:id', function (request, response) {
     var eventId = request.params.id;
+    if(request.session.user) {
+        Event.findByIdAndUpdate (
 
-    Event.findByIdAndUpdate (
+            eventId,
 
-        eventId,
+            request.body,
 
-        request.body,
+            function (error, result) {
+                if (error) {
+                    // ...
+                }
+                else {
+                    if (request.sendJson) {
+                        response.json ({
+                            message: 'event was updated'
+                        });
+                    }
+                    else {
+                        response.redirect ('/event/' + eventId);
+                    }
+                }
+            }
+        );
+    }
+    else {
+        response.redirect('user/login');
+    }
+});
 
-        function (error, result) {
+router.get ('/:id/delete', function (request, response) {
+
+    var eventId = request.params.id;
+    if(request.session.user) {
+        Event.findByIdAndRemove (
+            eventId, function (error, result) {
             if (error) {
                 // ...
             }
             else {
                 if (request.sendJson) {
                     response.json ({
-                        message: 'event was updated'
-                    });
+                        message: 'event was deleted.'
+                    })
                 }
                 else {
-                    response.redirect ('/event/' + eventId);
+                    response.redirect ('/event');
                 }
             }
-        }
-    );
-});
-
-router.get ('/:id/delete', function (request, response) {
-
-    var eventId = request.params.id;
-
-    Event.findByIdAndRemove (
-        eventId, function (error, result) {
-        if (error) {
-            // ...
-        }
-        else {
-            if (request.sendJson) {
-                response.json ({
-                    message: 'event was deleted.'
-                })
-            }
-            else {
-                response.redirect ('/event');
-            }
-        }
-    })
+        })
+    }
+    else {
+        response.redirect('user/login');
+    }
 });
 module.exports = router;

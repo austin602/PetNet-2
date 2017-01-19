@@ -3,7 +3,8 @@
 <div>
     <form class="form-inline" method="POST" enctype="application/x-www-form-urlencoded" action="/profile/pets/{{data.pets.id}}">
         <input name="_method" type="hidden" value="{{data.method}}">
-
+        <a class="btn btn-success" href="/profile/pets/{{data.pets.id}}/{{data.pets.type}}/pic">Update Pet Picture</a>
+        <br>
         <div class="form-group">
             <label>Name: </label>
             <input class="form-control" name="name" type="text" value="{{data.pets.name}}">

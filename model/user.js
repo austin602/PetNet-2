@@ -8,7 +8,7 @@ var userSchema = new Schema ({
     email: String,
     admin: Boolean,
     bio: String,
-    picture: String,
+    imageUrl: String,
     // Linking pet object by objects ID
     pets: [{ type: Schema.Types.ObjectId, ref: 'Pets'}],
     petType: [String]
