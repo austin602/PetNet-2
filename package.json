@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "Andrew Haddock",
+  "author": "Andrew Haddock & Austin Landon",
   "license": "MIT",
   "dependencies": {
     "angular": "^1.6.1",
