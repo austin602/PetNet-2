@@ -40,6 +40,7 @@
                         <li><a href="/contact">Contact</a></li>
                         <li><a href="/blog">Blog</a></li>
                         <li><a href="/angular/#/event">Event</a></li>
+
                         {{#if user}}
                         <li><a href="/profile/search">Search</a></li>
                         {{/if}}
@@ -63,11 +64,16 @@
         <div ui-view></div>
 
 
+            <p>Angular Page</p>
+
+
         <script src="/lib/angular/angular.js"></script>
         <script src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
 
         <script src="/js/angular/app.js"></script>
+
         <script src="/js/angular/EventsController.js"></script>
         <script src="/js/angular/EventsService.js"></script>
+
     </body>
 </html>

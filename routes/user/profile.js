@@ -5,6 +5,11 @@ var router = express.Router();
 var User = require('../../model/user.js');
 var Pets = require('../../model/pets.js');
 
+// NOTE: adding multer to edit profile picture
+var multer = require('multer');
+var processUploadFile = multer({ dest: './temp'});
+
+
 router.get('/', function(request, response) {
     // console.log('session: ', request.session.user.username);
     if (request.session.user) {
@@ -21,7 +26,7 @@ router.get('/', function(request, response) {
                     if (request.sendJson) {
                         response.json(result);
                     } else {
-                        console.log('*****RESULT: ', result.pets);
+                        console.log('*****RESULT: ', result);
                         response.render('profile', {
                             data: {
                                 user: result,
@@ -38,33 +43,38 @@ router.get('/', function(request, response) {
 
 // Route to add a new pet to an existing user
 router.get('/addpet', function(request, response) {
-    var list = [{
-            value: 'Dog'
-        },
-        {
-            value: 'Cat'
-        },
-        {
-            value: 'Bird'
-        },
-        {
-            value: 'Reptile'
-        }
-    ];
+    if (request.session.user){
+        var list = [{
+                value: 'Dog'
+            },
+            {
+                value: 'Cat'
+            },
+            {
+                value: 'Bird'
+            },
+            {
+                value: 'Reptile'
+            }
+        ];
 
-    var key, item;
-    for (key in list) {
-        // Grab the item in the list.
-        item = list[key];
+        var key, item;
+        for (key in list) {
+            // Grab the item in the list.
+            item = list[key];
+        }
+
+        response.render('profile/editpet', {
+            data: {
+                title: 'Add Pet',
+                method: 'POST',
+                typeList: list
+            }
+        });
     }
-
-    response.render('profile/editpet', {
-        data: {
-            title: 'Add Pet',
-            method: 'POST',
-            typeList: list
-        }
-    });
+    else {
+        response.redirect('user/login');
+    }
 });
 
 
@@ -109,18 +119,163 @@ router.post('/pets', function(request, response) {
 router.get('/user/:id', function(request, response) {
     // console.log('***TEST:', request.params.id);
     var userId = request.params.id;
+    if (request.session.user){
+        User.findById(userId, function(error, result) {
+            if (error) {
+                console.error('There was an error retreiving this user by id.');
+                response.send('There was an error retreiving this user by id.');
+            } else {
+                console.log('Found user: ', result);
+                response.render('profile/edituser', {
+                    data: {
+                        user: result
+                    }
+                });
+            }
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
+});
 
-    User.findById(userId, function(error, result) {
-        if (error) {
-            console.error('There was an error retreiving this user by id.');
-            response.send('There was an error retreiving this user by id.');
-        } else {
-            console.log('Found user: ', result);
-            response.render('profile/edituser', {
-                data: {
-                    user: result
+// Update pet profile images
+router.get('/pets/:id/:type/pic', function(request, response) {
+    var petId = request.params.id;
+    if(request.session.user) {
+
+        Pets.findById(petId, function(error, result) {
+            if(error) {
+                console.error('****ERROR: cannot find pet by id.');
+                response.send('Error finding pet by id');
+            }
+            else {
+                if (request.sendJson) {
+                    response.Json(result);
                 }
-            });
+                else {
+                    response.render('profile/pet-pic', {
+                        data: {
+                            method: 'PUT',
+                            pet: result
+                        }
+                    });
+                }
+            }
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
+});
+
+router.post('/pets/:id/:type/pic', processUploadFile.single('imageFile'),
+function(request, response) {
+    console.log('***TEST: ', request.params.type);
+    var petId = request.params.id;
+
+    if (request.file) {
+        console.log('file: ', request.file);
+        console.log('path: ', request.file.path);
+
+        var fs = require('fs-extra');
+        var source = request.file.path;
+        var basePath = './public';
+        var destination = '/img/uploads/' + request.file.originalname;
+
+        fs.move(source, (basePath + destination), function(error) {
+            fs.remove(source, function(error) {
+            })
+        })
+        request.body.imageUrl = destination;
+    }
+    else {
+        if (request.params.type == 'Dog') {
+            request.body.imageUrl = '/img/uploads/defaultdog.png'
+        }
+        else if (request.params.type == 'Cat') {
+            request.body.imageUrl = '/img/uploads/defaultcat.png'
+        }
+        else if (request.params.type == 'Bird') {
+            request.body.imageUrl = '/img/uploads/defaultbird.png'
+        }
+        else if (request.params.type == 'Reptile') {
+            request.body.imageUrl = '/img/uploads/defaultreptile.png'
+        }
+    }
+    console.log('Pet Image url: ', request.body.imageUrl);
+    Pets.findByIdAndUpdate(petId, request.body, function(error, result) {
+        if(error) {
+            console.error('***ERROR: unable to update pet with imageUrl', error);
+            response.send('Cannot update pet with imageUrl');
+        }
+        else {
+            console.log('---------------------', result);
+            response.redirect('/profile/');
+        }
+    });
+})
+
+// Update user profile image
+router.get('/user/:id/pic', function(request, response) {
+    var userId = request.params.id;
+    if(request.sesison.user) {
+        User.findById(userId, function(error, result) {
+            if (error) {
+                console.error('***ERROR: cannot find user by id');
+                response.send('Error finding user by id');
+            }
+            else {
+                if (request.sendJson) {
+                    response.Json(result);
+                }
+                else {
+                    response.render('profile/user-pic', {
+                        data: {
+                            method: 'PUT',
+                            user: result
+                        }
+                    });
+                }
+            }
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
+});
+
+router.post('/user/:id/pic', processUploadFile.single('imageFile'), function(request, response) {
+    var userId = request.params.id;
+
+    if (request.file) {
+
+        console.log('file:', request.file);
+        console.log('path: ', request.file.path);
+
+        var fs = require('fs-extra');
+        var source = request.file.path;
+        var basePath = './public';
+        var destination = '/img/uploads/' + request.file.originalname;
+
+        fs.move (source, (basePath + destination), function(error) {
+            fs.remove (source, function(error) {
+            })
+        })
+        request.body.imageUrl = destination;
+    }
+    else {
+        request.body.imageUrl = '/img/uploads/defaultuser.png'
+    }
+    console.log('Image url:', request.body.imageUrl);
+    User.findByIdAndUpdate(userId, request.body, function(error, result) {
+        if(error) {
+            console.error('***ERRROR: unable to update user with imageUrl', error);
+            response.send('Cannot update user with imageUrl');
+        }
+        else {
+            console.log('-------------------------',result);
+            response.redirect('/profile/')
         }
     });
 });
@@ -128,6 +283,7 @@ router.get('/user/:id', function(request, response) {
 // Update user profile data
 router.put('/user/:id', function(request, response) {
     var userId = request.params.id;
+
     // console.log('****TEST: ', request.body);
     User.findByIdAndUpdate(userId, request.body, function(error, result) {
         if (error) {
@@ -150,66 +306,74 @@ router.get('/pets/:id', function(request, response) {
     var petId = request.params.id;
     console.log(petId);
 
-    Pets.findById(petId, function(error, result) {
-        if (error) {
-            console.error('There was an error retreiving this pet by id');
-            response.send('There was an error retreiving this pet by id');
-        } else {
-            console.log('Found pet: ', result);
-            response.render('profile/viewpet', {
-                data: {
-                    pet: result
-                }
-            });
-        }
-    });
-
+    if (request.session.user){
+        Pets.findById(petId, function(error, result) {
+            if (error) {
+                console.error('There was an error retreiving this pet by id');
+                response.send('There was an error retreiving this pet by id');
+            } else {
+                console.log('Found pet: ', result);
+                response.render('profile/viewpet', {
+                    data: {
+                        pet: result
+                    }
+                });
+            }
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
 });
 
 // Show edit pet form
 router.get('/pets/:id/edit', function(request, response) {
     var petId = request.params.id;
+    if(request.session.user){
+        Pets.findById(petId, function(error, result) {
+            if (error) {
+                var errorMessage = 'Unable to find pet by id: ' + petId;
+                console.error('***ERROR: ', errorMessage);
+                response.send(errorMessage);
+            } else {
+                var list = [{
+                        value: 'Dog'
+                    },
+                    {
+                        value: 'Cat'
+                    },
+                    {
+                        value: 'Bird'
+                    },
+                    {
+                        value: 'Reptile'
+                    }
+                ]
 
-    Pets.findById(petId, function(error, result) {
-        if (error) {
-            var errorMessage = 'Unable to find pet by id: ' + petId;
-            console.error('***ERROR: ', errorMessage);
-            response.send(errorMessage);
-        } else {
-            var list = [{
-                    value: 'Dog'
-                },
-                {
-                    value: 'Cat'
-                },
-                {
-                    value: 'Bird'
-                },
-                {
-                    value: 'Reptile'
+                var key, item;
+                for (key in list) {
+                    item = list[key];
+
+                    if (result.type.toLowerCase() == item.value.toLowerCase()) {
+                        // Set that the type is selected.
+                        item.selected = 'selected';
+                    }
                 }
-            ]
 
-            var key, item;
-            for (key in list) {
-                item = list[key];
-
-                if (result.type.toLowerCase() == item.value.toLowerCase()) {
-                    // Set that the type is selected.
-                    item.selected = 'selected';
-                }
+                response.render('profile/editpet', {
+                    data: {
+                        title: 'Edit Pet Info',
+                        method: 'PUT',
+                        pets: result,
+                        typeList: list
+                    }
+                });
             }
-
-            response.render('profile/editpet', {
-                data: {
-                    title: 'Edit Pet Info',
-                    method: 'PUT',
-                    pets: result,
-                    typeList: list
-                }
-            });
-        }
-    });
+        });
+    }
+    else {
+        response.redirect('user/login');
+    }
 });
 
 // update existing pet data
