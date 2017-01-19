@@ -7,7 +7,7 @@ var petSchema = new Schema ({
     type: String,
     breed: String,
     bio: String,
-    image: String
+    imageUrl: String
 });
 
 var Pets = mongoose.model('Pets', petSchema);

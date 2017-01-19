@@ -1,0 +1,12 @@
+<h2>Change Profile Picture</h2>
+
+<div class="userpic">
+    <img src="{{data.user.imageUrl}}">
+</div>
+
+<form method="POST" action="/profile/user/{{data.user._id}}/pic" enctype="multipart/form-data">
+    <input type="hidden" name="method" value="{{data.method}}">
+    <input type="file" name="imageFile">
+    <br>
+    <button type="submit">Change Picture</button>
+</form>
