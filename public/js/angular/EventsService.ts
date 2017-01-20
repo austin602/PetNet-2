@@ -52,6 +52,20 @@ namespace App {
             });
             return promise;
         }
+
+        public delete (id, event) {
+            let promise = this.httpService ({
+                url: '/event/' + id + '/delete',
+                method: 'GET',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                data: event
+            });
+
+            return promise;
+        }
+
     }
     app.service('EventsService', EventsService);
 }

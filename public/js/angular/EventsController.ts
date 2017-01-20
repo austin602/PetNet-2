@@ -78,5 +78,19 @@ namespace App {
                 console.error('Unable to update event: ', response)
             });
         }
+
+        public delete (id) {
+            console.log('Deleted event by id: ', id);
+
+            this.eventsService.delete(id)
+                .success((response)=>{
+                    console.log('Event successfully delete', response);
+
+                    this.stateService.go ('events');
+                })
+                .error ((response)=>{
+                    console.error('ERROR: unable to delete event', response)
+                });
+        }
     }
 }
