@@ -1,12 +1,11 @@
-.main-body {
-    // background-image: url(https://www.just-wp-it.com/wp-content/uploads/2016/03/solid-color-light-blue-background.jpg);
-    background-color: #80C5E6;
+body {
+    background-image: url(https://www.just-wp-it.com/wp-content/uploads/2016/03/solid-color-light-blue-background.jpg);
     background-position: center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     font-family: 'Nunito', sans-serif;;
     font-size: 20px;
 }
@@ -20,11 +19,6 @@ a {
     font-size: 18px;
 }
 
-.jumbotron {
-    background-color: #eee7e7;
-    text-align: center;
-}
-
 .carousel-inner {
     img {
         align-content: center;
@@ -34,7 +28,7 @@ a {
     }
 }
 
-.blog-list {
+.col-md-6 {
     display: inline-block;
     margin: 20px;
     padding: 5px;
@@ -49,11 +43,6 @@ a {
 
 .event-list {
     list-style: none;
-    margin-left:65px;
-}
-
-.event-header {
-    margin-left: 65px;
 }
 
 .user-display {
@@ -93,23 +82,13 @@ a {
 }
 
 .pet-links {
-    display: block;
-    margin: 10px;
+    display: inline-block;
     img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        border: 2px solid black;
-        border-radius: 5px;
-        width: 450px;
-        height: 300px;
+        margin: 10px;
+        max-width: 28%;
+        max-height: 250px;
     }
-    img:hover {
-        opacity: 0.6;
-    }
-
 }
-
 
 .forms {
  // z-index: 10;
@@ -160,14 +139,10 @@ a {
 
 
 .results {
-    display: block;
+    display: inline-block;
     img {
-        width: 35%;
+        width: 10%;
     }
-}
-
-.search-header {
-    text-align:center;
 }
 
 .userpic {
