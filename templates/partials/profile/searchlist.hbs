@@ -1,9 +1,15 @@
-<h2>{{data.title}}</h2>
+<div class="container">
+    <h2>{{data.title}}</h2>
 
-<br>
-<div class="results">
-    {{#each data.user}}
-    <a href="/profile/search/user/{{id}}"><img src="{{imageUrl}}"></a>
-    <h3>Username: <a href="/profile/search/user/{{id}}">{{username}}</a></h3>
-    {{/each}}
+    <br>
+    <div class="row">
+        <div class="results">
+            <div class="col-md-6">
+                {{#each data.user}}
+                        <a href="/profile/search/user/{{id}}"><img src="{{imageUrl}}"></a>
+                        <h3>Username: <a href="/profile/search/user/{{id}}">{{username}}</a></h3>
+                {{/each}}
+            </div>
+        </div>
+    </div>
 </div>
