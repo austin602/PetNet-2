@@ -1,9 +1,9 @@
-<h2>Events Page</h2>
+<h2>OurPets Events Page</h2>
 
 <button class="btn btn-primary" ng-click="eventsController.read()">Show Event Posts</button>
 <button class="btn btn-primary" ng-click="eventsController.goToPage('events-create')">Create Event</button><br>
 
-<ul>
+<ul class="event-list">
     <li ng-repeat="post in eventsController.list">
         <div>
             <div>

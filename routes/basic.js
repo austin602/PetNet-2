@@ -27,7 +27,7 @@ router.get('/angular', function(request, response) {
         });
     }
     else {
-        response.render('user/login');
+        response.redirect('/user/login');
     }
 });
 
