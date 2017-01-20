@@ -219,7 +219,7 @@ function(request, response) {
 // Update user profile image
 router.get('/user/:id/pic', function(request, response) {
     var userId = request.params.id;
-    if(request.sesison.user) {
+    if(request.session.user) {
         User.findById(userId, function(error, result) {
             if (error) {
                 console.error('***ERROR: cannot find user by id');
