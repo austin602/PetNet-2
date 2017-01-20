@@ -26,7 +26,7 @@ router.post('/', function(request,response) {
         }
         else {
             console.log('user saved', request.body.username);
-            response.redirect('/user')
+            response.redirect('/admin')
         }
     });
 });
@@ -98,7 +98,7 @@ router.get('/:id/edit', function(request, response) {
     });
 });
 // NOTE: This is the the route to Put the edit in
-router.put('/:id', function (request,response) {
+router.put('admin/:id', function (request,response) {
     // response.send('save here')
     var userId = request.params.id
     User.findByIdAndUpdate(userId, request.body, function(error,resut) {
@@ -107,7 +107,7 @@ router.put('/:id', function (request,response) {
             response.send('cant update user')
         }
         else{
-            response.redirect('/user/' + userId)
+            response.redirect('/admin/' + userId)
         }
     });
 });
@@ -119,7 +119,7 @@ router.get('/:id/delete', function(request,response){
             response.send('Error removing id')
         }
         else{
-            response.redirect('/user')
+            response.redirect('/admin')
         }
     });
 });
