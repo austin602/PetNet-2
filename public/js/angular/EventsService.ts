@@ -10,11 +10,24 @@ namespace App {
             this.httpService = $httpService;
         }
 
-        public read(_id) {
+        // NOTE: Post /event
+        public create (event) {
+            let promise = this.httpService ({
+                url:'/event',
+                method: 'POST',
+                data: event,
+                headers: {
+                    'Content-Type' : 'application/json'
+                }
+            });
+            return promise;
+        }
+
+        public read(id) {
             let url = '/event';
 
-            if (_id) {
-                url = url + '/' + _id;
+            if (id) {
+                url = url + '/' + id;
             }
 
             let promise = this.httpService({
@@ -27,6 +40,32 @@ namespace App {
             });
             return promise;
         }
+
+        public update (id, event) {
+            let promise = this.httpService({
+                url:'/event/' + id,
+                method: 'PUT',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                data: event
+            });
+            return promise;
+        }
+
+        public delete (id, event) {
+            let promise = this.httpService ({
+                url: '/event/' + id + '/delete',
+                method: 'GET',
+                headers: {
+                    'Content-Type' : 'application/json'
+                },
+                data: event
+            });
+
+            return promise;
+        }
+
     }
     app.service('EventsService', EventsService);
 }

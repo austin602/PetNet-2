@@ -1,6 +1,7 @@
 <h2>Events Page</h2>
 
-<button class="btn btn-primary" ng-click="eventsController.read()">Show Forum Posts</button>
+<button class="btn btn-primary" ng-click="eventsController.read()">Show Event Posts</button>
+<button class="btn btn-primary" ng-click="eventsController.goToPage('events-create')">Create Event</button><br>
 
 <ul>
     <li ng-repeat="post in eventsController.list">
@@ -8,19 +9,19 @@
             <div>
                 <br>
                 <div>
-                    <strong>Name: </strong> {{ post.name }}
+                    <strong>Name: </strong> <a href="#" ng-click="eventsController.goToPage('events-view', {id:post._id})">{{ post.name }}</a>
                 </div>
                 <div>
-                    <strong>Name: </strong> {{ post.date }}
+                    <strong>Date: </strong> {{ post.date }}
                 </div>
                 <div>
-                    <strong>Name: </strong> {{ post.time }}
+                    <strong>Time: </strong> {{ post.time }}
                 </div>
                 <div>
-                    <strong>Name: </strong> {{ post.location }}
+                    <strong>Location: </strong> {{ post.location }}
                 </div>
                 <div>
-                    <strong>Name: </strong> {{ post.description }}
+                    <strong>Description: </strong> {{ post.description }}
                 </div>
                 <br>
             </div>

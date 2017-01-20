@@ -1,29 +1,29 @@
 <h2>Event</h2>
 {{#if user }}
-<a class="btn btn-warning" href="/event/{{ data.event.id }}/edit">Edit Event</a>
-<a class="btn btn-danger" href="/event/{{ data.event.id }}/delete">Delete Event</a>
+<a class="btn btn-warning" href="/event/{{ data.events.id }}/edit">Edit Event</a>
+<a class="btn btn-danger" href="/event/{{ data.events.id }}/delete">Delete Event</a>
 {{/if }}
 
 <div class="row">
     <div class="col-md-6">
         <div>
-            <strong>Name: </strong>{{data.post.name}}
+            <strong>Name: </strong>{{data.events.name}}
         </div>
 
         <div>
-            <strong>date:</strong> {{ data.event.date }}
+            <strong>date:</strong> {{ data.events.date }}
         </div>
 
         <div>
-            <strong>time:</strong> {{ data.event.time }}
+            <strong>time:</strong> {{ data.events.time }}
         </div>
 
         <div>
-            <strong>location:</strong> {{ data.event.location }}
+            <strong>location:</strong> {{ data.events.location }}
         </div>
 
         <div>
-            <strong>description:</strong> {{ data.event.description }}
+            <strong>description:</strong> {{ data.events.description }}
         </div>
     </div>
 </div>

@@ -1,0 +1,16 @@
+<h2>Event Details</h2>
+
+<div class="events">
+    <div>
+        <div>
+            <strong>Event Name: </strong>{{ eventsController.event.name }}<br>
+            <strong>Event Date: </strong>{{ eventsController.event.date }}<br>
+            <strong>Event Time: </strong>{{ eventsController.event.time }}<br>
+            <strong>Event Location: </strong>{{ eventsController.event.location }}<br>
+            <strong>Event Description: </strong>{{ eventsController.event.description }}<br>
+        </div>
+    </div>
+</div>
+
+<a class="btn btn-success" href="#" ng-click="eventsController.goToPage('events')">Back To Events</a>
+<a class="btn btn-danger" href="#" ng-click="eventsController.delete(eventsController.event._id)">Delete Post</a>
