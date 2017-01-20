@@ -1,0 +1,25 @@
+<h2>{{ eventsController.mode }} Event</h2>
+
+<form ng-submit="eventsController.create(eventsController.event._id)">
+    <div>
+        <label>Event Name: </label><br>
+        <input ng-model="eventsController.event.name">
+    </div>
+    <div>
+        <label>Event Date: </label><br>
+        <input ng-model="eventsController.event.date">
+    </div>
+    <div>
+        <label>Event Time: </label><br>
+        <input ng-model="eventsController.event.time">
+    </div>
+    <div>
+        <label>Event Location: </label><br>
+        <input ng-model="eventsController.event.location">
+    </div>
+    <div>
+        <label>Event Description: </label><br>
+        <textarea rows="7" cols="60" ng-model="eventsController.event.description"></textarea>
+    </div>
+    <button class="btn btn-warning">{{ eventsController.mode }}</button>
+</form>

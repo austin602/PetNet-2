@@ -75,11 +75,16 @@ router.get ('/:id', function (request, response) {
                 response.send (errorMessage);
             }
             else {
-                response.render ('event/view', {
-                    data: {
-                        event: result
-                    }
-                });
+                if(request.sendJson) {
+                    response.json(result)
+                }
+                else {
+                    response.render ('event/view', {
+                        data: {
+                            events : result
+                        }
+                    });
+                }
             }
         });
     }
@@ -102,7 +107,7 @@ router.get ('/:id/edit', function (request, response) {
                     data: {
                         title: 'Edit event',
                         method: 'PUT',
-                        event: result
+                        events : result
                     }
                 });
             }

@@ -6,19 +6,29 @@ namespace App {
 
             console.log($stateProvider);
             $stateProvider
-                .state('home', {
-                    url:'/home',
-                    // template: 'This is the angular home page.'
-                    templateUrl:'/templates/partials/home1.html'
-
-            
-            $stateProvider
                 .state('events', {
                     url:'/events',
                     templateUrl:'/templates/partials/events.html',
                     controller: App.EventsController,
                     controllerAs: 'eventsController'
-
+                })
+                .state('events-create', {
+                    url:'/events/create',
+                    templateUrl:'/templates/partials/events/edit.html',
+                    controller: App.EventsController,
+                    controllerAs: 'eventsController'
+                })
+                .state('events-edit', {
+                    url:'/events/:id',
+                    templateUrl:'/templates/partials/events/edit.html',
+                    controller: App.EventsController,
+                    controllerAs: 'eventsController'
+                })
+                .state('events-view', {
+                    url:'/events/:id',
+                    templateUrl: '/templates/partials/events/view.html',
+                    controller: App.EventsController,
+                    controllerAs: 'eventsController'
                 })
             ;
         }
